@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9ab4d8d9a5bf45a8a672047bcfabd5e6" Name="Diagram1">
+        <EntityTypeShape EntityType="IMDBModel.CastInfo" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IMDBModel.Celebrity" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IMDBModel.Director" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IMDBModel.Movie" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IMDBModel.Rating" Width="1.5" PointX="5.25" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IMDBModel.Review" Width="1.5" PointX="5.25" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IMDBModel.User" Width="1.5" PointX="3" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IMDBModel.WatchList" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <AssociationConnector Association="IMDBModel.FK__CastInfo__ActorI__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="IMDBModel.FK__CastInfo__MovieI__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="IMDBModel.FK__Director__UserID__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="IMDBModel.FK__Director__MovieI__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="IMDBModel.FK__Rating__MovieID__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="IMDBModel.FK__Review__MovieID__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="IMDBModel.FK__WatchList__Movie__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="IMDBModel.FK__Rating__UserID__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="IMDBModel.FK__Review__UserID__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="IMDBModel.FK__WatchList__UserI__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="IMDBModel.List" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="IMDBModel.Admin" Width="1.5" PointX="0.75" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

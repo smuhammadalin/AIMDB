@@ -1,0 +1,729 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="IMDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="CastInfo">
+          <Key>
+            <PropertyRef Name="MovieID" />
+            <PropertyRef Name="ActorID" />
+          </Key>
+          <Property Name="MovieID" Type="int" Nullable="false" />
+          <Property Name="ActorName" Type="varchar" MaxLength="30" />
+          <Property Name="ActorID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Celebrity">
+          <Key>
+            <PropertyRef Name="CelebID" />
+          </Key>
+          <Property Name="CelebID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="Type" Type="varchar" MaxLength="10" />
+          <Property Name="Bdate" Type="date" />
+          <Property Name="Favorite" Type="int" />
+        </EntityType>
+        <EntityType Name="Director">
+          <Key>
+            <PropertyRef Name="MovieID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="MovieID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Favorite" Type="int" />
+        </EntityType>
+        <EntityType Name="List">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="MovieID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="MovieID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="30" />
+          <Property Name="Genre" Type="varchar" MaxLength="10" />
+          <Property Name="Release Year" Type="int" />
+          <Property Name="Favorite" Type="int" />
+          <Property Name="Link" Type="varchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="MovieID" Type="int" Nullable="false" />
+          <Property Name="Stars" Type="int" />
+        </EntityType>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="MovieID" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="Email" Type="varchar" MaxLength="30" />
+          <Property Name="Password" Type="varchar" MaxLength="30" />
+          <Property Name="Bdate" Type="date" />
+        </EntityType>
+        <EntityType Name="WatchList">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="MovieID" Type="int" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK__CastInfo__ActorI__37A5467C">
+          <End Role="Celebrity" Type="Self.Celebrity" Multiplicity="1" />
+          <End Role="CastInfo" Type="Self.CastInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Celebrity">
+              <PropertyRef Name="CelebID" />
+            </Principal>
+            <Dependent Role="CastInfo">
+              <PropertyRef Name="ActorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CastInfo__MovieI__36B12243">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="CastInfo" Type="Self.CastInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="CastInfo">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Director__MovieI__33D4B598">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="Director" Type="Self.Director" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="Director">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Director__UserID__32E0915F">
+          <End Role="Celebrity" Type="Self.Celebrity" Multiplicity="1" />
+          <End Role="Director" Type="Self.Director" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Celebrity">
+              <PropertyRef Name="CelebID" />
+            </Principal>
+            <Dependent Role="Director">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__List__MovieID__35BCFE0A">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="List" Type="Self.List" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="List">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__List__UserID__34C8D9D1">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="List" Type="Self.List" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="List">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rating__MovieID__3B75D760">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rating__UserID__3A81B327">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Review__MovieID__398D8EEE">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="Review" Type="Self.Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Review__UserID__38996AB5">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Review" Type="Self.Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WatchList__Movie__3D5E1FD2">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="WatchList" Type="Self.WatchList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="WatchList">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WatchList__UserI__3C69FB99">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="WatchList" Type="Self.WatchList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="WatchList">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IMDBModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CastInfo" EntityType="Self.CastInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Celebrity" EntityType="Self.Celebrity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Director" EntityType="Self.Director" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="List" EntityType="Self.List" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Review" EntityType="Self.Review" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WatchList" EntityType="Self.WatchList" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CastInfo__ActorI__37A5467C" Association="Self.FK__CastInfo__ActorI__37A5467C">
+            <End Role="Celebrity" EntitySet="Celebrity" />
+            <End Role="CastInfo" EntitySet="CastInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CastInfo__MovieI__36B12243" Association="Self.FK__CastInfo__MovieI__36B12243">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="CastInfo" EntitySet="CastInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Director__MovieI__33D4B598" Association="Self.FK__Director__MovieI__33D4B598">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="Director" EntitySet="Director" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Director__UserID__32E0915F" Association="Self.FK__Director__UserID__32E0915F">
+            <End Role="Celebrity" EntitySet="Celebrity" />
+            <End Role="Director" EntitySet="Director" />
+          </AssociationSet>
+          <AssociationSet Name="FK__List__MovieID__35BCFE0A" Association="Self.FK__List__MovieID__35BCFE0A">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="List" EntitySet="List" />
+          </AssociationSet>
+          <AssociationSet Name="FK__List__UserID__34C8D9D1" Association="Self.FK__List__UserID__34C8D9D1">
+            <End Role="User" EntitySet="User" />
+            <End Role="List" EntitySet="List" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rating__MovieID__3B75D760" Association="Self.FK__Rating__MovieID__3B75D760">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="Rating" EntitySet="Rating" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rating__UserID__3A81B327" Association="Self.FK__Rating__UserID__3A81B327">
+            <End Role="User" EntitySet="User" />
+            <End Role="Rating" EntitySet="Rating" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Review__MovieID__398D8EEE" Association="Self.FK__Review__MovieID__398D8EEE">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="Review" EntitySet="Review" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Review__UserID__38996AB5" Association="Self.FK__Review__UserID__38996AB5">
+            <End Role="User" EntitySet="User" />
+            <End Role="Review" EntitySet="Review" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WatchList__Movie__3D5E1FD2" Association="Self.FK__WatchList__Movie__3D5E1FD2">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="WatchList" EntitySet="WatchList" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WatchList__UserI__3C69FB99" Association="Self.FK__WatchList__UserI__3C69FB99">
+            <End Role="User" EntitySet="User" />
+            <End Role="WatchList" EntitySet="WatchList" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IMDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CastInfo">
+          <Key>
+            <PropertyRef Name="MovieID" />
+            <PropertyRef Name="ActorID" />
+          </Key>
+          <Property Name="MovieID" Type="Int32" Nullable="false" />
+          <Property Name="ActorName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ActorID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Celebrity" Relationship="Self.FK__CastInfo__ActorI__37A5467C" FromRole="CastInfo" ToRole="Celebrity" />
+          <NavigationProperty Name="Movie" Relationship="Self.FK__CastInfo__MovieI__36B12243" FromRole="CastInfo" ToRole="Movie" />
+        </EntityType>
+        <EntityType Name="Celebrity">
+          <Key>
+            <PropertyRef Name="CelebID" />
+          </Key>
+          <Property Name="CelebID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Bdate" Type="DateTime" Precision="0" />
+          <Property Name="Favorite" Type="Int32" />
+          <NavigationProperty Name="CastInfoes" Relationship="Self.FK__CastInfo__ActorI__37A5467C" FromRole="Celebrity" ToRole="CastInfo" />
+          <NavigationProperty Name="Directors" Relationship="Self.FK__Director__UserID__32E0915F" FromRole="Celebrity" ToRole="Director" />
+        </EntityType>
+        <EntityType Name="Director">
+          <Key>
+            <PropertyRef Name="MovieID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="MovieID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Favorite" Type="Int32" />
+          <NavigationProperty Name="Celebrity" Relationship="Self.FK__Director__UserID__32E0915F" FromRole="Director" ToRole="Celebrity" />
+          <NavigationProperty Name="Movie" Relationship="Self.FK__Director__MovieI__33D4B598" FromRole="Director" ToRole="Movie" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="MovieID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Genre" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Release_Year" Type="Int32" />
+          <Property Name="Favorite" Type="Int32" />
+          <Property Name="Link" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CastInfoes" Relationship="Self.FK__CastInfo__MovieI__36B12243" FromRole="Movie" ToRole="CastInfo" />
+          <NavigationProperty Name="Directors" Relationship="Self.FK__Director__MovieI__33D4B598" FromRole="Movie" ToRole="Director" />
+          <NavigationProperty Name="Ratings" Relationship="Self.FK__Rating__MovieID__3B75D760" FromRole="Movie" ToRole="Rating" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__MovieID__398D8EEE" FromRole="Movie" ToRole="Review" />
+          <NavigationProperty Name="WatchLists" Relationship="Self.FK__WatchList__Movie__3D5E1FD2" FromRole="Movie" ToRole="WatchList" />
+          <NavigationProperty Name="Users" Relationship="Self.List" FromRole="Movie" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="MovieID" Type="Int32" Nullable="false" />
+          <Property Name="Stars" Type="Int32" />
+          <NavigationProperty Name="Movie" Relationship="Self.FK__Rating__MovieID__3B75D760" FromRole="Rating" ToRole="Movie" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Rating__UserID__3A81B327" FromRole="Rating" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="MovieID" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Movie" Relationship="Self.FK__Review__MovieID__398D8EEE" FromRole="Review" ToRole="Movie" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Review__UserID__38996AB5" FromRole="Review" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Bdate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Ratings" Relationship="Self.FK__Rating__UserID__3A81B327" FromRole="User" ToRole="Rating" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__UserID__38996AB5" FromRole="User" ToRole="Review" />
+          <NavigationProperty Name="WatchLists" Relationship="Self.FK__WatchList__UserI__3C69FB99" FromRole="User" ToRole="WatchList" />
+          <NavigationProperty Name="Movies" Relationship="Self.List" FromRole="User" ToRole="Movie" />
+        </EntityType>
+        <EntityType Name="WatchList">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="MovieID" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Movie" Relationship="Self.FK__WatchList__Movie__3D5E1FD2" FromRole="WatchList" ToRole="Movie" />
+          <NavigationProperty Name="User" Relationship="Self.FK__WatchList__UserI__3C69FB99" FromRole="WatchList" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__CastInfo__ActorI__37A5467C">
+          <End Role="Celebrity" Type="Self.Celebrity" Multiplicity="1" />
+          <End Role="CastInfo" Type="Self.CastInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Celebrity">
+              <PropertyRef Name="CelebID" />
+            </Principal>
+            <Dependent Role="CastInfo">
+              <PropertyRef Name="ActorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CastInfo__MovieI__36B12243">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="CastInfo" Type="Self.CastInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="CastInfo">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Director__UserID__32E0915F">
+          <End Role="Celebrity" Type="Self.Celebrity" Multiplicity="1" />
+          <End Role="Director" Type="Self.Director" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Celebrity">
+              <PropertyRef Name="CelebID" />
+            </Principal>
+            <Dependent Role="Director">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Director__MovieI__33D4B598">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="Director" Type="Self.Director" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="Director">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rating__MovieID__3B75D760">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Review__MovieID__398D8EEE">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="Review" Type="Self.Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WatchList__Movie__3D5E1FD2">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="WatchList" Type="Self.WatchList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="WatchList">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rating__UserID__3A81B327">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Review__UserID__38996AB5">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Review" Type="Self.Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WatchList__UserI__3C69FB99">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="WatchList" Type="Self.WatchList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="WatchList">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="List">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DbModels" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CastInfoes" EntityType="Self.CastInfo" />
+          <EntitySet Name="Celebrities" EntityType="Self.Celebrity" />
+          <EntitySet Name="Directors" EntityType="Self.Director" />
+          <EntitySet Name="Movies" EntityType="Self.Movie" />
+          <EntitySet Name="Ratings" EntityType="Self.Rating" />
+          <EntitySet Name="Reviews" EntityType="Self.Review" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="WatchLists" EntityType="Self.WatchList" />
+          <AssociationSet Name="FK__CastInfo__ActorI__37A5467C" Association="Self.FK__CastInfo__ActorI__37A5467C">
+            <End Role="Celebrity" EntitySet="Celebrities" />
+            <End Role="CastInfo" EntitySet="CastInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CastInfo__MovieI__36B12243" Association="Self.FK__CastInfo__MovieI__36B12243">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="CastInfo" EntitySet="CastInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Director__UserID__32E0915F" Association="Self.FK__Director__UserID__32E0915F">
+            <End Role="Celebrity" EntitySet="Celebrities" />
+            <End Role="Director" EntitySet="Directors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Director__MovieI__33D4B598" Association="Self.FK__Director__MovieI__33D4B598">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="Director" EntitySet="Directors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rating__MovieID__3B75D760" Association="Self.FK__Rating__MovieID__3B75D760">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Review__MovieID__398D8EEE" Association="Self.FK__Review__MovieID__398D8EEE">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="Review" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WatchList__Movie__3D5E1FD2" Association="Self.FK__WatchList__Movie__3D5E1FD2">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="WatchList" EntitySet="WatchLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rating__UserID__3A81B327" Association="Self.FK__Rating__UserID__3A81B327">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Review__UserID__38996AB5" Association="Self.FK__Review__UserID__38996AB5">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Review" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WatchList__UserI__3C69FB99" Association="Self.FK__WatchList__UserI__3C69FB99">
+            <End Role="User" EntitySet="Users" />
+            <End Role="WatchList" EntitySet="WatchLists" />
+          </AssociationSet>
+          <AssociationSet Name="List" Association="Self.List">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Admins" EntityType="IMDBModel.Admin" />
+        </EntityContainer>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IMDBModelStoreContainer" CdmEntityContainer="DbModels">
+          <EntitySetMapping Name="CastInfoes">
+            <EntityTypeMapping TypeName="IMDBModel.CastInfo">
+              <MappingFragment StoreEntitySet="CastInfo">
+                <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+                <ScalarProperty Name="ActorName" ColumnName="ActorName" />
+                <ScalarProperty Name="ActorID" ColumnName="ActorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Celebrities">
+            <EntityTypeMapping TypeName="IMDBModel.Celebrity">
+              <MappingFragment StoreEntitySet="Celebrity">
+                <ScalarProperty Name="CelebID" ColumnName="CelebID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Bdate" ColumnName="Bdate" />
+                <ScalarProperty Name="Favorite" ColumnName="Favorite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Directors">
+            <EntityTypeMapping TypeName="IMDBModel.Director">
+              <MappingFragment StoreEntitySet="Director">
+                <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Favorite" ColumnName="Favorite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movies">
+            <EntityTypeMapping TypeName="IMDBModel.Movie">
+              <MappingFragment StoreEntitySet="Movie">
+                <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Genre" ColumnName="Genre" />
+                <ScalarProperty Name="Release_Year" ColumnName="Release Year" />
+                <ScalarProperty Name="Favorite" ColumnName="Favorite" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="IMDBModel.Rating">
+              <MappingFragment StoreEntitySet="Rating">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+                <ScalarProperty Name="Stars" ColumnName="Stars" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reviews">
+            <EntityTypeMapping TypeName="IMDBModel.Review">
+              <MappingFragment StoreEntitySet="Review">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="IMDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Bdate" ColumnName="Bdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WatchLists">
+            <EntityTypeMapping TypeName="IMDBModel.WatchList">
+              <MappingFragment StoreEntitySet="WatchList">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="List" TypeName="IMDBModel.List" StoreEntitySet="List">
+            <EndProperty Name="Movie">
+              <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="UserID" ColumnName="UserID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="IMDBModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
